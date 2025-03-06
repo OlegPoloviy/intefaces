@@ -10,6 +10,7 @@ body {
 /* Контейнер */
 .container {
     width: 40vw;
+    max-width: 500px; /* Щоб не став занадто великим на великих екранах */
     margin: auto;
     background: white;
     padding: 20px;
@@ -23,14 +24,16 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Вхідні дані */
+/* Поля вводу та кнопка */
 input, button {
-    margin: 10px 20px 20px 0;
+    display: block; /* Щоб кожен елемент займав повну ширину */
+    width: calc(100% - 24px); /* Враховує падінги */
     padding: 12px;
-    width: 100%;
+    margin: 10px auto; /* Центрування та відступи */
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    box-sizing: border-box; /* Виправляє проблему виходу за межі */
 }
 
 /* Кнопка */
