@@ -1,39 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Function Tabulation</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Табуляція функцій</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Змінити тему">
+      <span id="theme-icon">🌙</span>
+    </button>
+
     <div class="container">
-        <h2>Tabulation of f(x) = x + x<sup>(1/2)</sup>+ x<sup>(1/3)</sup> - 2.5</h2>
-        <label for="a">a:</label>
-        <input type="number" id="a" value="0.4" step="0.1">
+      <h2>Інтерактивна табуляція функцій</h2>
 
-        <label for="b">b:</label>
-        <input type="number" id="b" value="1" step="0.1">
+      <div class="control-panel">
+        <div class="control-block">
+          <div class="input-group">
+            <label for="function">Функція f(x):</label>
+            <input
+              type="text"
+              id="function"
+              class="function-input"
+              value="x + Math.sqrt(x) + Math.cbrt(x) - 2.5"
+              placeholder="Наприклад: Math.sin(x) + x^2"
+            />
+            <div class="tooltip">
+              ℹ️
+              <span class="tooltip-text"
+                >Використовуйте JavaScript синтаксис. Приклади: Math.sin(x),
+                Math.pow(x,2), x**2, Math.sqrt(x)</span
+              >
+            </div>
+          </div>
 
-        <label for="n">N (points):</label>
-        <input type="number" id="n" value="10" min="2">
+          <div class="preset-functions">
+            <label>Шаблони функцій:</label>
+            <select id="preset-function" onchange="selectPresetFunction()">
+              <option value="">Виберіть функцію...</option>
+              <option value="x + Math.sqrt(x) + Math.cbrt(x) - 2.5">
+                x + √x + ∛x - 2.5
+              </option>
+              <option value="Math.sin(x)">sin(x)</option>
+              <option value="Math.cos(x)">cos(x)</option>
+              <option value="Math.tan(x)">tan(x)</option>
+              <option value="Math.pow(x, 2)">x²</option>
+              <option value="Math.pow(x, 3)">x³</option>
+              <option value="Math.log(x)">ln(x)</option>
+              <option value="Math.exp(x)">e^x</option>
+              <option value="1/x">1/x</option>
+            </select>
+          </div>
+        </div>
 
-        <button onclick="tabulate()">Tabulate</button>
+        <div class="control-block">
+          <div class="input-group">
+            <label for="a">Початок діапазону (a):</label>
+            <input type="number" id="a" value="0.4" step="0.1" />
+          </div>
 
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>x</th>
-                    <th>f(x)</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+          <div class="slider-container">
+            <span class="value-display" id="a-value">0.4</span>
+            <input
+              type="range"
+              id="a-slider"
+              class="slider"
+              min="-10"
+              max="10"
+              step="0.1"
+              value="0.4"
+              oninput="updateRangeValue('a')"
+            />
+          </div>
 
-        <canvas id="chartCanvas" width="400" height="200"></canvas>
+          <div class="input-group">
+            <label for="b">Кінець діапазону (b):</label>
+            <input type="number" id="b" value="1" step="0.1" />
+          </div>
+
+          <div class="slider-container">
+            <span class="value-display" id="b-value">1</span>
+            <input
+              type="range"
+              id="b-slider"
+              class="slider"
+              min="-10"
+              max="10"
+              step="0.1"
+              value="1"
+              oninput="updateRangeValue('b')"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="n">Кількість точок (N):</label>
+            <input type="number" id="n" value="10" min="2" max="100" />
+          </div>
+
+          <div class="slider-container">
+            <span class="value-display" id="n-value">10</span>
+            <input
+              type="range"
+              id="n-slider"
+              class="slider"
+              min="2"
+              max="100"
+              step="1"
+              value="10"
+              oninput="updateRangeValue('n')"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="tabulate()" class="accent">Табулювати</button>
+        <button onclick="clearResults()" class="secondary">Очистити</button>
+        <button onclick="exportData()" class="secondary">
+          Експортувати CSV
+        </button>
+        <button onclick="toggleOptions()" id="optionsButton" class="secondary">
+          Параметри ⚙️
+        </button>
+      </div>
+
+      <div id="optionsPanel" style="display: none">
+        <div class="control-block">
+          <div class="input-group">
+            <label for="precision">Точність (знаків після коми):</label>
+            <input
+              type="number"
+              id="precision"
+              value="4"
+              min="0"
+              max="10"
+              step="1"
+            />
+          </div>
+
+          <div class="input-group">
+            <label>Формат графіку:</label>
+            <select id="chartType">
+              <option value="line">Лінійний</option>
+              <option value="scatter">Точковий</option>
+              <option value="bar">Стовпчиковий</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="chartColor">Колір графіка:</label>
+            <input type="color" id="chartColor" value="#3498db" />
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <table id="resultTable">
+        <thead>
+          <tr>
+            <th>x</th>
+            <th>f(x)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./index.js"></script>
-</body>
+    <script src="index.js"></script>
+  </body>
 </html>

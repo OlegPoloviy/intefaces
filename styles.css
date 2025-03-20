@@ -1,74 +1,301 @@
-/* Загальні стилі */
 body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 20px;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  margin: 0;
+  padding: 20px;
+  color: #333;
 }
 
-/* Контейнер */
 .container {
-    width: 40vw;
-    max-width: 500px; /* Щоб не став занадто великим на великих екранах */
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Заголовок */
 h2 {
-    color: #333;
-    margin-bottom: 20px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
 }
 
-/* Поля вводу та кнопка */
-input, button {
-    display: block; /* Щоб кожен елемент займав повну ширину */
-    width: calc(100% - 24px); /* Враховує падінги */
-    padding: 12px;
-    margin: 10px auto; /* Центрування та відступи */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box; /* Виправляє проблему виходу за межі */
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-/* Кнопка */
+label {
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 120px;
+  text-align: left;
+}
+
+input,
+select,
 button {
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    border: none;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+.function-input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.slider {
+  flex-grow: 1;
+  height: 5px;
+  margin: 0 10px;
+}
+
+.value-display {
+  min-width: 60px;
+  text-align: center;
+  background: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.control-block {
+  flex: 1;
+  min-width: 250px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 12px 20px;
+  min-width: 120px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
-/* Таблиця */
+button.secondary {
+  background-color: #95a5a6;
+}
+
+button.secondary:hover {
+  background-color: #7f8c8d;
+}
+
+button.accent {
+  background-color: #2ecc71;
+}
+
+button.accent:hover {
+  background-color: #27ae60;
+}
+
+button.danger {
+  background-color: #e74c3c;
+}
+
+button.danger:hover {
+  background-color: #c0392b;
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: block;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
 }
 
 th {
-    background-color: #007bff;
-    color: white;
+  background-color: #3498db;
+  color: white;
+  position: sticky;
+  top: 0;
 }
 
-/* Графік */
-canvas {
-    margin-top: 20px;
-    max-width: 100%;
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e3f2fd;
+}
+
+.chart-container {
+  position: relative;
+  margin-top: 30px;
+  height: 300px;
+  width: 100%;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode {
+  background: #2c3e50;
+  color: #ecf0f1;
+}
+
+.dark-mode .container {
+  background: #34495e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode h2 {
+  color: #ecf0f1;
+  border-bottom-color: #3498db;
+}
+
+.dark-mode .control-block {
+  background: #2c3e50;
+}
+
+.dark-mode input,
+.dark-mode select {
+  background: #34495e;
+  color: #ecf0f1;
+  border-color: #7f8c8d;
+}
+
+.dark-mode .value-display {
+  background: #2c3e50;
+  color: #ecf0f1;
+}
+
+.dark-mode tr:nth-child(even) {
+  background-color: #2c3e50;
+}
+
+.dark-mode tr:hover {
+  background-color: #3a506b;
+}
+
+.preset-functions {
+  margin-top: 10px;
+}
+
+/* Стилі для тултіпів */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  cursor: help;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Стилі для респонсивності */
+@media (max-width: 768px) {
+  .control-panel {
+    flex-direction: column;
+  }
+
+  .control-block {
+    min-width: auto;
+  }
+
+  .input-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  input,
+  select {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .button-group {
+    flex-wrap: wrap;
+  }
 }
